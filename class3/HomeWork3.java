@@ -8,7 +8,9 @@ public class HomeWork3 {
     System.out.println("==============================");
     System.out.println("3-2. 請使用for迴圈與While迴圈，寫出99乘法表");
     Q3_2 q3_2 = new Q3_2();
+    System.out.println("for loop:");
     q3_2.usingFor();
+    System.out.println("while loop:");
     q3_2.usingWhile();
     System.out.println("==============================");
     System.out.println("3-3. 請使用for迴圈，先用一個整數一維陣列儲存1900~2017年後，判斷那幾年是閏年?");
@@ -41,9 +43,9 @@ class Q3_1 {
     int eqaulHeight = maxWidth * 2 - 1;
     for (int i = 0; i < eqaulHeight; i++) {
       if (i < maxWidth) {
-        System.out.println(new String(new char[i]).replace("\0", "*"));
+        System.out.println(new String(new char[i+1]).replace("\0", "*"));
       } else {
-        System.out.println(new String(new char[(2 * maxWidth) - (i + 2)]).replace("\0", "*"));
+        System.out.println(new String(new char[(2 * maxWidth) - (i + 1)]).replace("\0", "*"));
       }
     }
   }
@@ -59,9 +61,13 @@ class Q3_2 {
     String oneLine = "";
     for (int j = 0; j < 9; j++) {
       oneLine = "";
-      for (int i = 0; i < tenIntArray.length; i++) {
+      for (int i = 0; i < 9; i++) {
         int tmpInt = i + 1;
-        oneLine += (j + 1) + "*" + tmpInt + "=" + ((j + 1) * tmpInt) + "; ";
+    	String result = Integer.toString((j + 1) * tmpInt);
+    	if(result.length() < 2) {
+    	  result = " " + result;
+    	}
+        oneLine += (j + 1) + "*" + tmpInt + "=" + result + "; ";
       }
       System.out.println(oneLine);
     }
@@ -69,17 +75,21 @@ class Q3_2 {
 
   public void usingWhile() {
     int i = 1;
-    int j = 1;
     String oneLine = "";
     while (i < 10) {
-      oneLine = "";
+      int j = 1;
       while (j < 10) {
-        oneLine += i + "*" + j + "=" + (i * j) + "; ";
+    	String result = Integer.toString(i * j);
+    	if(result.length() < 2) {
+    	  result = " " + result;
+    	}
+        oneLine += i + "*" + j + "=" + result + "; ";
         j++;
       }
-      System.out.print(oneLine);
+      oneLine += "\n";
       i++;
     }
+    System.out.print(oneLine);
   }
 }
 
@@ -88,24 +98,24 @@ class Q3_2 {
   3-3. 請使用for迴圈，先用一個整數一維陣列儲存1900~2017年後，判斷那幾年是閏年? 
  */
 class Q3_3 {
-  public int[] years() {
-    int[] yearsArray = new int[(2017 - 1900 + 1)];
-    for (int i = 1900; i <= 2017; i++) {
-      yearsArray[i] = i;
+  public int [] years() {
+    int [] yearsArray = new int[(2017 - 1900)];
+    for (int i = 1900; i < 2017; i++) {
+      yearsArray[i - 1900] = i;
     }
+    return yearsArray;
   }
   public boolean isLeapYear(int year) {
     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
   }
   public void printLeapYear() {
-    String leapYears = "";
+    int [] yearsArray = years();
     for (int i = 0; i < yearsArray.length; i++) {
       int thisYear = yearsArray[i];
       if (isLeapYear(thisYear)) {
-        leapYears += thisYear + ", ";
+    	System.out.println(thisYear);
       }
     }
-    System.out.println(leapYears);
   }
 }
 
@@ -121,18 +131,15 @@ class Q3_3 {
  * </pre>
  */
 class Q3_4 {
-  public float avgScore(float[] scores) {
-    float totalScore = 0.00;
-    for (int i = 0; i < scores.length; i++) {
-      totalScore += scores[i];
-    }
-    return totalScore / scores.length;
+  public double avgScore(double score1, double score2, double score3) {
+	double totalScore = score1 + score2 + score3;
+    return totalScore / 3;
   }
   public void printTable() {
     System.out.println("姓名 數學 國文 英文 平均");
-    System.out.println("小乖  95  80  77  " + avgScore([95, 80, 77]));
-    System.out.println("小忍  55  87  89  " + avgScore([55, 87, 89]));
-    System.out.println("小天  71  78  88  " + avgScore([71, 78, 88]));
+    System.out.printf("小乖  95  80  77  %.2f \n", avgScore(95, 80, 77));
+    System.out.printf("小忍  55  87  89  %.2f \n", avgScore(55, 87, 89));
+    System.out.printf("小天  71  78  88  %.2f \n", avgScore(71, 78, 88));
   }
 }
 
