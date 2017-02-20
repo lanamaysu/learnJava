@@ -41,9 +41,9 @@ class Q3_1 {
     int eqaulHeight = maxWidth * 2 - 1;
     for (int i = 0; i < eqaulHeight; i++) {
       if (i < maxWidth) {
-        System.out.println('*' * (i + 1));
+        System.out.println(new String(new char[i]).replace("\0", "*"));
       } else {
-        System.out.println('*' * (2 * maxWidth - (i + 1)));
+        System.out.println(new String(new char[(2 * maxWidth) - (i + 2)]).replace("\0", "*"));
       }
     }
   }
@@ -69,6 +69,7 @@ class Q3_2 {
 
   public void usingWhile() {
     int i = 1;
+    int j = 1;
     String oneLine = "";
     while (i < 10) {
       oneLine = "";
