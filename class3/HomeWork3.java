@@ -131,8 +131,8 @@ class Q3_3 {
  * </pre>
  */
 class Q3_4 {
-  public double avgScore(double score1, double score2, double score3) {
-	double totalScore = score1 + score2 + score3;
+  public float avgScore(float score1, float score2, float score3) {
+	float totalScore = score1 + score2 + score3;
     return totalScore / 3;
   }
   public void printTable() {
@@ -140,6 +140,9 @@ class Q3_4 {
     System.out.printf("小乖  95  80  77  %.2f \n", avgScore(95, 80, 77));
     System.out.printf("小忍  55  87  89  %.2f \n", avgScore(55, 87, 89));
     System.out.printf("小天  71  78  88  %.2f \n", avgScore(71, 78, 88));
+    System.out.printf("數學平均           %.2f \n", avgScore(95, 55, 71));
+    System.out.printf("國文平均           %.2f \n", avgScore(80, 87, 78));
+    System.out.printf("英文平均           %.2f \n", avgScore(77, 89, 88));
   }
 }
 
