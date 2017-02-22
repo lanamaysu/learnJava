@@ -4,14 +4,13 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class HomeWork4 {
-  public static void main(String[] args) {
-    new Q4_1().printAns();
-    new Q4_2().input();
-    new Q4_3().printCalendar();
-  }
+	public static void main(String[] args) {
+		// new Q4_1().printAns();
+		// new Q4_2().input();
+		// new Q4_3().printCalendar();
+		new Q4_4().printAns();
+	}
 }
-
-
 
 /**
  * <pre>
@@ -20,40 +19,43 @@ public class HomeWork4 {
  * </pre>
  */
 class Q4_1 {
-  public void printAns() {
-    System.out.println("有一個整數陣列，請幫我完成由大到小排序與小到大排序\n{100, 10, 7, 78, 87, 45, 32, 11, 10}");
-    int[] array = {100 , 10 , 7 , 78 , 87 , 45 , 32 , 11 , 10};
-    System.out.println("Ascending : " + Arrays.toString(sortAscending(array)));
-    System.out.println("Descending: " + Arrays.toString(sortDescending(array)));
-  }
-  public int[] sortAscending(int[] array) {
-    int arrLength = array.length;
-    for(int i = arrLength; i >= 0; i--) {
-      for(int j = 0; j < arrLength - 1; j++) {
-        if(array[j] > array[j+1]) {
-          swapNumber(j, j+1, array);
-        }
-      }
-    }
-   return array;
-  }
-  public int[] sortDescending(int[] array) {
-    int arrLength = array.length;
-    for(int i = 0; i < arrLength; i++) {
-      for(int j = arrLength -1; j >0; j--) {
-        if(array[j] > array[j-1]) {
-          swapNumber(j, j-1, array);
-        }
-      }
-    }
-   return array;
-  }
-  public void swapNumber(int i, int j, int[] arr) {
-    int tmp;
-    tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
-  }
+	public void printAns() {
+		System.out.println("有一個整數陣列，請幫我完成由大到小排序與小到大排序\n{100, 10, 7, 78, 87, 45, 32, 11, 10}");
+		int[] array = { 100, 10, 7, 78, 87, 45, 32, 11, 10 };
+		System.out.println("Ascending : " + Arrays.toString(sortAscending(array)));
+		System.out.println("Descending: " + Arrays.toString(sortDescending(array)));
+	}
+
+	public int[] sortAscending(int[] array) {
+		int arrLength = array.length;
+		for (int i = arrLength; i >= 0; i--) {
+			for (int j = 0; j < arrLength - 1; j++) {
+				if (array[j] > array[j + 1]) {
+					swapNumber(j, j + 1, array);
+				}
+			}
+		}
+		return array;
+	}
+
+	public int[] sortDescending(int[] array) {
+		int arrLength = array.length;
+		for (int i = 0; i < arrLength; i++) {
+			for (int j = arrLength - 1; j > 0; j--) {
+				if (array[j] > array[j - 1]) {
+					swapNumber(j, j - 1, array);
+				}
+			}
+		}
+		return array;
+	}
+
+	public void swapNumber(int i, int j, int[] arr) {
+		int tmp;
+		tmp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = tmp;
+	}
 }
 
 /**
@@ -64,37 +66,40 @@ class Q4_1 {
  * </pre>
  */
 class Q4_2 {
-  public void input() {
-    System.out.println("EASY CALCULATOR START");
-    System.out.print("\tPlease enter a number: ");
-    int num1 = numberInput();
-    System.out.print("\tPlease enter another number: ");
-    int num2 = numberInput();
-    String operator;
-    boolean getResult = false;
-    while (!getResult) {
-      operator = operatorInput();
-      getResult = result(num1, num2, operator);
-    }
-    System.out.println("EASY CALCULATOR END");
-  }
-  public int numberInput() {
-    Scanner sc = new Scanner(System.in);
-    int number;
-    while (!sc.hasNextInt()) {
-      System.out.println(" That's not a number!");
-      sc.next();
-    }
-    number = sc.nextInt();
-    return number;
-  }
-  public String operatorInput() {
-    System.out.print("\tPlease enter an operator (+-*/ or in english): ");
-    Scanner sc = new Scanner(System.in);
-    String operator = sc.next();
-    return operator;
-  }
-  public boolean result(int num1, int num2, String operator) {
+	public void input() {
+		System.out.println("EASY CALCULATOR START");
+		System.out.print("\tPlease enter a number: ");
+		int num1 = numberInput();
+		System.out.print("\tPlease enter another number: ");
+		int num2 = numberInput();
+		String operator;
+		boolean getResult = false;
+		while (!getResult) {
+			operator = operatorInput();
+			getResult = result(num1, num2, operator);
+		}
+		System.out.println("EASY CALCULATOR END");
+	}
+
+	public int numberInput() {
+		Scanner sc = new Scanner(System.in);
+		int number;
+		while (!sc.hasNextInt()) {
+			System.out.print("\tThat's not a number! Please try again: ");
+			sc.next();
+		}
+		number = sc.nextInt();
+		return number;
+	}
+
+	public String operatorInput() {
+		System.out.print("\tPlease enter an operator (+-*/ or in english): ");
+		Scanner sc = new Scanner(System.in);
+		String operator = sc.next();
+		return operator;
+	}
+
+	public boolean result(int num1, int num2, String operator) {
 		switch (operator) {
 		case "+":
 		case "add":
@@ -119,7 +124,6 @@ class Q4_2 {
 	}
 }
 
-
 /**
  * <pre>
  * 
@@ -138,20 +142,22 @@ class Q4_2 {
  * </pre>
  */
 class Q4_3 {
-  public int [] years(int startY, int endY) {
-    int [] yearsArray = new int[(endY - startY)];
-    for (int i = startY; i < endY; i++) {
-      yearsArray[i - startY] = i;
-    }
-    return yearsArray;
-  }
-  public boolean isLeapYear(int year) {
-    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
-  }
-  public int monthDays(int year, int month) {
-    switch (month) {
-    case 2:
-      return isLeapYear(year) ? 29 : 28;
+	public int[] years(int startY, int endY) {
+		int[] yearsArray = new int[(endY - startY)];
+		for (int i = startY; i < endY; i++) {
+			yearsArray[i - startY] = i;
+		}
+		return yearsArray;
+	}
+
+	public boolean isLeapYear(int year) {
+		return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+	}
+
+	public int monthDays(int year, int month) {
+		switch (month) {
+		case 2:
+			return isLeapYear(year) ? 29 : 28;
 		case 1:
 		case 3:
 		case 5:
@@ -160,33 +166,33 @@ class Q4_3 {
 		case 10:
 		case 11:
 		case 12:
-      return 31;
+			return 31;
 		default:
-      return 30;
+			return 30;
 		}
-  }
-  public void printCalendar() {
-    System.out.println("使用 switch 與 array 印出 2007~2017 的年月日");
-    int [] yearsArray = years(2007, 2017);
-    int thisYear;
-    int thisMonthDays;
-    String oneLineDays;
-    for(int i = 0; i < yearsArray.length; i++) {
-      thisYear = yearsArray[i];
-      System.out.println(thisYear);
-      for(int month = 1; month <= 12; month++) {
-        System.out.println(month + "月");
-        thisMonthDays = monthDays(thisYear, month);
-        oneLineDays = "";
-        for(int days = 1; days <= thisMonthDays; days++) {
-          oneLineDays += (days == 1 ? days : ("," + days));
-        }
-        System.out.println(oneLineDays);
-      }
-    }
-  }
-}
+	}
 
+	public void printCalendar() {
+		System.out.println("使用 switch 與 array 印出 2007~2017 的年月日");
+		int[] yearsArray = years(2007, 2017);
+		int thisYear;
+		int thisMonthDays;
+		String oneLineDays;
+		for (int i = 0; i < yearsArray.length; i++) {
+			thisYear = yearsArray[i];
+			System.out.println(thisYear);
+			for (int month = 1; month <= 12; month++) {
+				System.out.println(month + "月");
+				thisMonthDays = monthDays(thisYear, month);
+				oneLineDays = "";
+				for (int days = 1; days <= thisMonthDays; days++) {
+					oneLineDays += (days == 1 ? days : ("," + days));
+				}
+				System.out.println(oneLineDays);
+			}
+		}
+	}
+}
 
 /**
  * <pre>
@@ -200,8 +206,7 @@ class Q4_3 {
  * </pre>
  */
 class Q4_4 {
-  
+	public void printAns() {
+	}
+
 }
-
-
-
