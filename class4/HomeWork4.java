@@ -7,6 +7,7 @@ public class HomeWork4 {
   public static void main(String[] args) {
     new Q4_1().printAns();
     new Q4_2().input();
+    new Q4_3().printCalendar();
   }
 }
 
@@ -137,7 +138,46 @@ class Q4_2 {
  * </pre>
  */
 class Q4_3 {
-  
+  int [] month31 = {1, 3, 5, 7, 8, 10, 11, 12};
+  public int [] years(int startY, int endY) {
+    int [] yearsArray = new int[(endY - startY)];
+    for (int i = startY; i < endY; i++) {
+      yearsArray[i - startY] = i;
+    }
+    return yearsArray;
+  }
+  public boolean isLeapYear(int year) {
+    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+  }
+  public int monthDays(int year, int month) {
+    int is31days = Arrays.binarySearch(month31, month);
+    if(is31days > 0) {
+      return 31;
+    } else if (month == 2) {
+      return isLeapYear(year) ? 29 : 28;
+    } else {
+      return 30;
+    }
+  }
+  public void printCalendar() {
+    int [] yearsArray = years(2007, 2017);
+    int thisYear;
+    int thisMonthDays;
+    String oneLineDays;
+    for(int i = 0; i < yearsArray.length; i++) {
+      thisYear = yearsArray[i];
+      System.out.println(thisYear);
+      for(int month = 1; month <= 12; month++) {
+        System.out.println(month + "月");
+        thisMonthDays = monthDays(thisYear, month);
+        oneLineDays = "";
+        for(int days = 1; days <= thisMonthDays; days++) {
+          oneLineDays += (days == 1 ? days : ("," + days));
+        }
+        System.out.println(oneLineDays);
+      }
+    }
+  }
 }
 
 
