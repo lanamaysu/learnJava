@@ -1,10 +1,12 @@
 package class4;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class HomeWork4 {
   public static void main(String[] args) {
     new Q4_1().printAns();
+    new Q4_2().input();
   }
 }
 
@@ -61,7 +63,59 @@ class Q4_1 {
  * </pre>
  */
 class Q4_2 {
-  
+  public void input() {
+    System.out.println("EASY CALCULATOR START");
+    System.out.print("\tPlease enter a number: ");
+    int num1 = numberInput();
+    System.out.print("\tPlease enter another number: ");
+    int num2 = numberInput();
+    String operator;
+    boolean getResult = false;
+    while (!getResult) {
+      operator = operatorInput();
+      getResult = result(num1, num2, operator);
+    }
+    System.out.println("EASY CALCULATOR END");
+  }
+  public int numberInput() {
+    Scanner sc = new Scanner(System.in);
+    int number;
+    while (!sc.hasNextInt()) {
+      System.out.println(" That's not a number!");
+      sc.next();
+    }
+    number = sc.nextInt();
+    return number;
+  }
+  public String operatorInput() {
+    System.out.print("\tPlease enter an operator (+-*/ or in english): ");
+    Scanner sc = new Scanner(System.in);
+    String operator = sc.next();
+    return operator;
+  }
+  public boolean result(int num1, int num2, String operator) {
+		switch (operator) {
+		case "+":
+		case "add":
+			System.out.printf("\tResult: %d + %d = %d\n", num1, num2, (num1 + num2));
+			return true;
+		case "-":
+		case "minus":
+			System.out.printf("\tResult: %d - %d = %d\n", num1, num2, (num1 - num2));
+			return true;
+		case "*":
+		case "multiply":
+			System.out.printf("\tResult: %d * %d = %d\n", num1, num2, (num1 * num2));
+			return true;
+		case "/":
+		case "devide":
+			System.out.printf("\tResult: %d * %d = %f\n", num1, num2, (num1 / num2));
+			return true;
+		default:
+			System.out.println("\tOperator not found, please try again");
+			return false;
+		}
+	}
 }
 
 
