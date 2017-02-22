@@ -2,9 +2,8 @@ package class3;
 
 public class HomeWork3 {
   public static void main(String[] args) {
-    Q3_1 q3_1 = new Q3_1();
     System.out.println("3-1.請使用for迴圈，練習印出以下圖案");
-    q3_1.printDot(5);
+    new Q3_1().printDot(5);
     System.out.println("==============================");
     System.out.println("3-2. 請使用for迴圈與While迴圈，寫出99乘法表");
     Q3_2 q3_2 = new Q3_2();
