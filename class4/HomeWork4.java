@@ -138,7 +138,6 @@ class Q4_2 {
  * </pre>
  */
 class Q4_3 {
-  int [] month31 = {1, 3, 5, 7, 8, 10, 11, 12};
   public int [] years(int startY, int endY) {
     int [] yearsArray = new int[(endY - startY)];
     for (int i = startY; i < endY; i++) {
@@ -150,16 +149,24 @@ class Q4_3 {
     return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
   }
   public int monthDays(int year, int month) {
-    int is31days = Arrays.binarySearch(month31, month);
-    if(is31days > 0) {
-      return 31;
-    } else if (month == 2) {
+    switch (month) {
+    case 2:
       return isLeapYear(year) ? 29 : 28;
-    } else {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 11:
+		case 12:
+      return 31;
+		default:
       return 30;
-    }
+		}
   }
   public void printCalendar() {
+    System.out.println("使用 switch 與 array 印出 2007~2017 的年月日");
     int [] yearsArray = years(2007, 2017);
     int thisYear;
     int thisMonthDays;
