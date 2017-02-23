@@ -7,8 +7,7 @@ public class Class4 {
 	public static void main(String[] args) {
 		MyOtherIfElse myOtherIfElse = new MyOtherIfElse();
 		myOtherIfElse.canBeDivided(30);
-		MySystemIn mySystemIn = new MySystemIn();
-		mySystemIn.inputWhile();
+		new MySystemIn().inputWhile();
 	}
 }
 
@@ -42,15 +41,14 @@ class MyOtherIfElse {
 }
 
 class MySystemIn {
+	Scanner scanner = new Scanner(System.in);
 	public void input() {
-		Scanner scanner = new Scanner(System.in);
 		System.out.print("Please input your name: ");
 		System.out.printf("Hello! %s!", scanner.next());
 	}
 
 	// 練習 請使用While無窮迴圈，讓使用者持續輸入文字，直到輸入0，結束程式
 	public void inputWhile() {
-		Scanner scanner = new Scanner(System.in);
 		boolean flag = true;
 		while(flag) {
 			System.out.print("Please input a number: ");

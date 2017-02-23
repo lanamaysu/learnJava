@@ -1,0 +1,17 @@
+# Compiled source #
+###################
+*.class
+.classpath
+.project
+bin/*
+/bin/
+
+# Logs and databases #
+######################
+*.log
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+.Trashes
