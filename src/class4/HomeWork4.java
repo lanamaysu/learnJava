@@ -67,23 +67,23 @@ class Q4_1 {
  * </pre>
  */
 class Q4_2 {
-	Scanner sc = new Scanner(System.in);
 	public void input() {
+		Scanner sc = new Scanner(System.in);
 		System.out.println("EASY CALCULATOR START");
 		System.out.print("\tPlease enter a number: ");
-		int num1 = numberInput();
+		int num1 = numberInput(sc);
 		System.out.print("\tPlease enter another number: ");
-		int num2 = numberInput();
+		int num2 = numberInput(sc);
 		String operator;
 		boolean getResult = false;
 		while (!getResult) {
-			operator = operatorInput();
+			operator = operatorInput(sc);
 			getResult = result(num1, num2, operator);
 		}
 		System.out.println("EASY CALCULATOR END");
 	}
 
-	public int numberInput() {
+	public int numberInput(Scanner sc) {
 		int number;
 		while (!sc.hasNextInt()) {
 			System.out.print("\tThat's not a number! Please try again: ");
@@ -93,7 +93,7 @@ class Q4_2 {
 		return number;
 	}
 
-	public String operatorInput() {
+	public String operatorInput(Scanner sc) {
 		System.out.print("\tPlease enter an operator (+-*/ or in english): ");
 		String operator = sc.next();
 		return operator;
@@ -208,8 +208,8 @@ class Q4_3 {
 class Q4_4 {
 	int lowerBound;
 	int upperBound;
-	Scanner sc = new Scanner(System.in);
 	public void input(int min, int max) {
+		Scanner sc = new Scanner(System.in);
 		lowerBound = min;
 		upperBound = max;
 		System.out.printf("Please enter a number between %d and %d\n", min, max);
@@ -221,7 +221,7 @@ class Q4_4 {
 		while (!getResult) {
 			guessTimes++;
 			System.out.printf("===== Round %d =====\n", guessTimes);
-			inputInt = numberInput(lowerBound, upperBound);
+			inputInt = numberInput(lowerBound, upperBound, sc);
 			inputNums += inputInt + ",";
 			getResult = result(inputInt, ans, guessTimes, inputNums);
 		}
@@ -231,7 +231,7 @@ class Q4_4 {
 		return min + new Random().nextInt(max + 1);
 	}
 
-	public int numberInput(int min, int max) {
+	public int numberInput(int min, int max, Scanner sc) {
 		System.out.print("Input your guess number: ");
 		int number;
 		while (!sc.hasNextInt()) {
