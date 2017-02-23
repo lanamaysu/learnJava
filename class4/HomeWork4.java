@@ -1,5 +1,6 @@
 package class4;
 
+import java.util.Random;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ public class HomeWork4 {
 		// new Q4_1().printAns();
 		// new Q4_2().input();
 		// new Q4_3().printCalendar();
-		new Q4_4().printAns();
+		new Q4_4().input(1, 100);
 	}
 }
 
@@ -206,7 +207,60 @@ class Q4_3 {
  * </pre>
  */
 class Q4_4 {
-	public void printAns() {
+	int lowerBound;
+	int upperBound;
+	public void input(int min, int max) {
+		lowerBound = min;
+		upperBound = max;
+		System.out.printf("Please enter a number between %d and %d\n", min, max);
+		int inputInt;
+		int ans = genRandomInt(min, max);
+		int guessTimes = 0;
+		String inputNums = "";
+		boolean getResult = false;
+		while (!getResult) {
+			guessTimes++;
+			System.out.printf("===== Round %d =====\n", guessTimes);
+			inputInt = numberInput(min, max);
+			inputNums += inputInt + ",";
+			getResult = result(inputInt, ans, guessTimes, inputNums);
+		}
 	}
 
+	public int genRandomInt(int min, int max) {
+		return min + new Random().nextInt(max + 1);
+	}
+
+	public int numberInput(int min, int max) {
+		System.out.print("Input your guess number: ");
+		Scanner sc = new Scanner(System.in);
+		int number;
+		while (!sc.hasNextInt()) {
+			System.out.print("Type error! Please input an integer: ");
+			sc.next();
+		}
+		number = sc.nextInt();
+		while (number < min || number > max) {
+			System.out.printf("Input out of boundary! It's between %d and %d: ", min, max);
+			number = sc.nextInt();
+		}
+		return number;
+	}
+
+	public boolean result(int input, int ans, int guessTimes, String inputNums) {
+		if(input == ans) {
+			System.out.println("Congrats! You did it!");
+			System.out.printf("The answer is %d, you guessed %d times in total.\n", ans, guessTimes);
+			System.out.printf("All guesses you've done: " + inputNums.substring(0,inputNums.length()-1));
+			return true;
+		} else {
+			if(input < ans) {
+				lowerBound = input;
+			} else {
+				upperBound = input;
+			}
+			System.out.printf("Booooo! It's between %d and %d. Try it again!\n", lowerBound, upperBound);
+			return false;
+		}
+	}
 }
