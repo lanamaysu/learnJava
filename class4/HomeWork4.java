@@ -221,7 +221,7 @@ class Q4_4 {
 		while (!getResult) {
 			guessTimes++;
 			System.out.printf("===== Round %d =====\n", guessTimes);
-			inputInt = numberInput(min, max);
+			inputInt = numberInput(lowerBound, upperBound);
 			inputNums += inputInt + ",";
 			getResult = result(inputInt, ans, guessTimes, inputNums);
 		}
