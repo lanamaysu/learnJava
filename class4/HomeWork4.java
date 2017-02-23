@@ -8,7 +8,7 @@ public class HomeWork4 {
 	public static void main(String[] args) {
 		// new Q4_1().printAns();
 		// new Q4_2().input();
-		// new Q4_3().printCalendar();
+		// new Q4_3().printCalendar(2007, 2017);
 		new Q4_4().input(1, 100);
 	}
 }
@@ -67,6 +67,7 @@ class Q4_1 {
  * </pre>
  */
 class Q4_2 {
+	Scanner sc = new Scanner(System.in);
 	public void input() {
 		System.out.println("EASY CALCULATOR START");
 		System.out.print("\tPlease enter a number: ");
@@ -83,7 +84,6 @@ class Q4_2 {
 	}
 
 	public int numberInput() {
-		Scanner sc = new Scanner(System.in);
 		int number;
 		while (!sc.hasNextInt()) {
 			System.out.print("\tThat's not a number! Please try again: ");
@@ -95,7 +95,6 @@ class Q4_2 {
 
 	public String operatorInput() {
 		System.out.print("\tPlease enter an operator (+-*/ or in english): ");
-		Scanner sc = new Scanner(System.in);
 		String operator = sc.next();
 		return operator;
 	}
@@ -116,7 +115,7 @@ class Q4_2 {
 			return true;
 		case "/":
 		case "devide":
-			System.out.printf("\tResult: %d * %d = %f\n", num1, num2, (num1 / num2));
+			System.out.printf("\tResult: %d / %d = %f\n", num1, num2, (float)num1/num2);
 			return true;
 		default:
 			System.out.println("\tOperator not found, please try again");
@@ -173,9 +172,9 @@ class Q4_3 {
 		}
 	}
 
-	public void printCalendar() {
-		System.out.println("使用 switch 與 array 印出 2007~2017 的年月日");
-		int[] yearsArray = years(2007, 2017);
+	public void printCalendar(int start, int end) {
+		System.out.printf("使用 switch 與 array 印出 %d~%d 的年月日\n", start, end);
+		int[] yearsArray = years(start, end);
 		int thisYear;
 		int thisMonthDays;
 		String oneLineDays;
@@ -209,6 +208,7 @@ class Q4_3 {
 class Q4_4 {
 	int lowerBound;
 	int upperBound;
+	Scanner sc = new Scanner(System.in);
 	public void input(int min, int max) {
 		lowerBound = min;
 		upperBound = max;
@@ -233,7 +233,6 @@ class Q4_4 {
 
 	public int numberInput(int min, int max) {
 		System.out.print("Input your guess number: ");
-		Scanner sc = new Scanner(System.in);
 		int number;
 		while (!sc.hasNextInt()) {
 			System.out.print("Type error! Please input an integer: ");
