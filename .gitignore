@@ -1,8 +1,6 @@
 # Compiled source #
 ###################
 *.class
-.classpath
-.project
 bin/*
 /bin/
 
