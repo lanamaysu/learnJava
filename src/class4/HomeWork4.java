@@ -206,12 +206,9 @@ class Q4_3 {
  * </pre>
  */
 class Q4_4 {
-	int lowerBound;
-	int upperBound;
 	public void input(int min, int max) {
 		Scanner sc = new Scanner(System.in);
-		lowerBound = min;
-		upperBound = max;
+		int[] boundary = {min, max};
 		System.out.printf("Please enter a number between %d and %d\n", min, max);
 		int inputInt;
 		int ans = genRandomInt(min, max);
@@ -221,9 +218,9 @@ class Q4_4 {
 		while (!getResult) {
 			guessTimes++;
 			System.out.printf("===== Round %d =====\n", guessTimes);
-			inputInt = numberInput(lowerBound, upperBound, sc);
+			inputInt = numberInput(boundary[0], boundary[1], sc);
 			inputNums += inputInt + ",";
-			getResult = result(inputInt, ans, guessTimes, inputNums);
+			getResult = result(inputInt, ans, guessTimes, inputNums, boundary);
 		}
 	}
 
@@ -246,7 +243,7 @@ class Q4_4 {
 		return number;
 	}
 
-	public boolean result(int input, int ans, int guessTimes, String inputNums) {
+	public boolean result(int input, int ans, int guessTimes, String inputNums, int[] boundary) {
 		if(input == ans) {
 			System.out.println("Congrats! You did it!");
 			System.out.printf("The answer is %d, you guessed %d times in total.\n", ans, guessTimes);
@@ -254,12 +251,14 @@ class Q4_4 {
 			return true;
 		} else {
 			if(input < ans) {
-				lowerBound = input;
+				boundary[0] = input;
 			} else {
-				upperBound = input;
+				boundary[1] = input;
 			}
-			System.out.printf("Booooo! It's between %d and %d. Try it again!\n", lowerBound, upperBound);
+			System.out.printf("Booooo! It's between %d and %d. Try it again!\n", boundary[0], boundary[1]);
 			return false;
 		}
 	}
 }
+
+
