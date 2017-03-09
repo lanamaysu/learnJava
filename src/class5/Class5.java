@@ -94,7 +94,7 @@ class MyBigDecimal {
   // 初始化陷阱
   public void trick() {
     System.out.println("1.25959 float  => " + new BigDecimal(1.25959));
-    System.out.println("1.25959 Double => " + new BigDecimal(new Double(1.25959)));
+    // System.out.println("1.25959 Double => " + new BigDecimal(new Double(1.25959)));
     System.out.println("1.25959 String => " + new BigDecimal("1.25959"));
   }
 

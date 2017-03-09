@@ -19,7 +19,7 @@ public class Class2 {
     cat1.name = "0";
     cat1.number = 0;
     cat2.name = "0";
-    System.out.println(cat1.name.equals(cat1.number));
+    // System.out.println(cat1.name.equals(cat1.number));
     System.out.println(cat1.name.equals(cat2.name));
     System.out.println(cat1.name == cat2.name);
     System.out.println(cat1.name);
