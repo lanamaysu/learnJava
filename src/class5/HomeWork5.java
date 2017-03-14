@@ -1,8 +1,14 @@
 package class5;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class HomeWork5 {
   public static void main(String[] args) {
-    new Q5_1().doMethods();
+//    new Q5_1().doMethods();
+//    new Q5_2().printAns();
+    new Q5_3().printCalendar();
   }
 }
 
@@ -81,7 +87,18 @@ class Q5_1 {
  * </pre>
  */
 class Q5_2 {
-
+  public void printAns() {
+    Calendar calendar = Calendar.getInstance();
+    int thisYear = calendar.get(Calendar.YEAR);
+    System.out.println(findWeekDay(thisYear+1, 4, 1));
+  }
+  public String findWeekDay(int year, int month, int day) {
+    Calendar wantDate = new GregorianCalendar(year, month - 1, day);
+    System.out.println(wantDate.getTime());
+    SimpleDateFormat sdf = new SimpleDateFormat("E");
+    String weekDay = sdf.format(wantDate.getTime());
+    return weekDay;
+  }
 }
 
 
@@ -99,7 +116,41 @@ class Q5_2 {
  * </pre>
  */
 class Q5_3 {
-
+  public void printCalendar() {
+    Calendar calendar = Calendar.getInstance();
+    int thisYear = calendar.get(Calendar.YEAR);
+    for(int i = 1; i <= 12; i++) {
+      System.out.println("\n" + thisYear + "年 " + i + "月");
+      System.out.println(chtCalendarTitle());
+      System.out.println(monthCalendar(thisYear, i));
+    }
+  }
+  public String monthCalendar(int year, int month) {
+    Calendar calendar = new GregorianCalendar(year, month-1, 1);
+    int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    int firstWeekday = calendar.get(Calendar.DAY_OF_WEEK);
+    int firstSat = 7 - firstWeekday + 1;
+    StringBuilder thisMonth = new StringBuilder();
+    for(int j = 0; j < firstWeekday - 1; j++) {
+      thisMonth.append("\t");
+    }
+    for(int i = 1; i <= daysInMonth; i++) {
+      thisMonth.append(String.format("%2d", i)).append("\t");
+      if(firstSat == 7) {
+        if (i%7 == 0) {
+          thisMonth.append("\n");
+        }
+      } else {
+        if(i == firstSat || i%7 == firstSat) {
+          thisMonth.append("\n");
+        }
+      }
+    }
+    return thisMonth.toString();
+  }
+  public String chtCalendarTitle() {
+    return "日\t一\t二\t三\t四\t五\t六\t";
+  }
 }
 
 
