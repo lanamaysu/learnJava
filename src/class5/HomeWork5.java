@@ -1,14 +1,17 @@
 package class5;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 
 public class HomeWork5 {
   public static void main(String[] args) {
 //    new Q5_1().doMethods();
 //    new Q5_2().printAns();
-    new Q5_3().printCalendar();
+//    new Q5_3().printCalendar();
+    new Q5_4().input();
   }
 }
 
@@ -84,6 +87,7 @@ class Q5_1 {
  *  使用Date物件與Calendar物件
  *  計算下一個年度的4/1
  *  那天是禮拜幾
+ *  以及離現在還有多少天
  * </pre>
  */
 class Q5_2 {
@@ -91,6 +95,7 @@ class Q5_2 {
     Calendar calendar = Calendar.getInstance();
     int thisYear = calendar.get(Calendar.YEAR);
     System.out.println(findWeekDay(thisYear+1, 4, 1));
+    System.out.println(daysBetween(calendar, new GregorianCalendar(thisYear+1, 3, 1)));
   }
   public String findWeekDay(int year, int month, int day) {
     Calendar wantDate = new GregorianCalendar(year, month - 1, day);
@@ -98,6 +103,15 @@ class Q5_2 {
     SimpleDateFormat sdf = new SimpleDateFormat("E");
     String weekDay = sdf.format(wantDate.getTime());
     return weekDay;
+  }
+  public long daysBetween(Calendar start, Calendar end) {
+    Calendar running = (Calendar) start.clone();
+    long days = 0;
+    while(running.before(end)) {
+      running.add(Calendar.DAY_OF_YEAR, 1);
+      days++;
+    }
+    return days;
   }
 }
 
@@ -163,5 +177,57 @@ class Q5_3 {
  * </pre>
  */
 class Q5_4 {
+  public void input() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("EASY CALCULATOR START");
+    System.out.print("\tPlease enter a number: ");
+    BigDecimal num1 = numberInput(sc);
+    System.out.print("\tPlease enter another number: ");
+    BigDecimal num2 = numberInput(sc);
+    String operator;
+    boolean getResult = false;
+    while (!getResult) {
+      operator = operatorInput(sc);
+      getResult = result(num1, num2, operator);
+    }
+    System.out.println("EASY CALCULATOR END");
+  }
 
+  public BigDecimal numberInput(Scanner sc) {
+    while (!sc.hasNextInt()) {
+      System.out.print("\tThat's not a number! Please try again: ");
+      sc.next();
+    }
+    return sc.nextBigDecimal();
+  }
+
+  public String operatorInput(Scanner sc) {
+    System.out.print("\tPlease enter an operator (+-*/ or in english): ");
+    String operator = sc.next();
+    return operator;
+  }
+
+  public boolean result(BigDecimal num1, BigDecimal num2, String operator) {
+    switch (operator) {
+      case "+":
+      case "add":
+        System.out.printf("\tResult: %d + %d = %d%n", num1.longValue(), num2.longValue(), num1.add(num2).longValue());
+        return true;
+      case "-":
+      case "subtract":
+        System.out.printf("\tResult: %d - %d = %d%n", num1.longValue(), num2.longValue(), num1.subtract(num2).longValue());
+        return true;
+      case "*":
+      case "multiply":
+        System.out.printf("\tResult: %d * %d = %d%n", num1.longValue(), num2.longValue(), num1.multiply(num2).longValue());
+        return true;
+      case "/":
+      case "divide":
+        System.out.printf("\tResult: %d / %d = %f%n", num1.longValue(), num2.longValue(), num1.divide(num2, 6, BigDecimal.ROUND_HALF_UP).floatValue());
+        return true;
+      default:
+        System.out.println("\tOperator not found, please try again");
+        return false;
+    }
+  }
 }
