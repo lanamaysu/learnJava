@@ -223,7 +223,11 @@ class Q5_4 {
         return true;
       case "/":
       case "divide":
-        System.out.printf("\tResult: %d / %d = %f%n", num1.longValue(), num2.longValue(), num1.divide(num2, 6, BigDecimal.ROUND_HALF_UP).floatValue());
+        try {
+          System.out.printf("\tResult: %d / %d = %f%n", num1.longValue(), num2.longValue(), num1.divide(num2, 6, BigDecimal.ROUND_HALF_UP).floatValue());
+        } catch (ArithmeticException e) {
+          System.out.println("Invalid operation: " + e.getMessage());
+        }
         return true;
       default:
         System.out.println("\tOperator not found, please try again");
