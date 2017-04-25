@@ -1,6 +1,5 @@
 package class6;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,13 +12,14 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeMap;
 
 public class HomeWork6 {
   public static void main(String[] args) {
     // new Q6_1().ans();
     // new Q6_2().ans();
     // new Q6_3().ans();
-//    new Q6_4().ans();
+    // new Q6_4().ans();
     new Q6_5().ans();
   }
 }
@@ -273,7 +273,8 @@ class Q6_4 {
     printOrderList(customorOrderMap.get(customorId), memberMap);
   }
 
-  public void calcAvg(Map<String, List<OrderData>> customorOrderMap, Map<String, Member> memberMap) {
+  public void calcAvg(Map<String, List<OrderData>> customorOrderMap,
+      Map<String, Member> memberMap) {
     System.out.println("編號\t姓名\t平均消費金額");
     for (String key : customorOrderMap.keySet()) {
       int totalPrice = 0;
@@ -286,9 +287,10 @@ class Q6_4 {
     }
   }
 
-  public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map, boolean isAsc) {
+  public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map,
+      boolean isAsc) {
     List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
-    if(isAsc) {
+    if (isAsc) {
       Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
         @Override
         public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
@@ -311,7 +313,8 @@ class Q6_4 {
     return result;
   }
 
-  public Map<String, Integer> sortPriceAsc(Map<String, List<OrderData>> customorOrderMap, boolean isAsc) {
+  public Map<String, Integer> sortPriceAsc(Map<String, List<OrderData>> customorOrderMap,
+      boolean isAsc) {
     Map<String, Integer> totalBought = new HashMap<String, Integer>();
     for (String key : customorOrderMap.keySet()) {
       int totalPrice = 0;
@@ -322,11 +325,13 @@ class Q6_4 {
     }
     return sortByValue(totalBought, isAsc);
   }
-  
-  public void printCustomorBought(Map<String, Integer> customorBought, Map<String, Member> memberMap) {
+
+  public void printCustomorBought(Map<String, Integer> customorBought,
+      Map<String, Member> memberMap) {
     System.out.println("編號\t姓名\t消費總金額");
-    for(String key: customorBought.keySet()) {
-      System.out.println(key + "\t" + memberMap.get(key).getName() + "\t" + customorBought.get(key));
+    for (String key : customorBought.keySet()) {
+      System.out
+          .println(key + "\t" + memberMap.get(key).getName() + "\t" + customorBought.get(key));
     }
   }
 
@@ -352,9 +357,8 @@ class Q6_4 {
   public void printOrderList(List<OrderData> orderList, Map<String, Member> memberMap) {
     System.out.println("編號\t姓名\t訂單\t訂購內容\t金額");
     for (OrderData data : orderList) {
-      System.out.println(data.getCustomorId() + "\t"
-          + memberMap.get(data.getCustomorId()).getName() + "\t" + data.getOrderId() + "\t"
-          + data.getCatagory() + "\t" + data.getPrice());
+      System.out.println(data.getCustomorId() + "\t" + memberMap.get(data.getCustomorId()).getName()
+          + "\t" + data.getOrderId() + "\t" + data.getCatagory() + "\t" + data.getPrice());
     }
   }
 
@@ -430,9 +434,11 @@ class Q6_5 {
     System.out.println("==");
     calcAvg(customorOrderMap, memberMap);
     System.out.println("==");
-    printCustomorBought(sortPriceAsc(customorOrderMap, true), memberMap);
+//    printCustomorBought(sortPriceAsc(customorOrderMap, true), memberMap);
+    printTreeMap(sortTreeMap(customorOrderMap, true), memberMap);
     System.out.println("==");
-    printCustomorBought(sortPriceAsc(customorOrderMap, false), memberMap);
+//    printCustomorBought(sortPriceAsc(customorOrderMap, false), memberMap);
+    printTreeMap(sortTreeMap(customorOrderMap, false), memberMap);
   }
 
   public void input(List<Member> memberMap, Map<String, List<OrderData>> customorOrderMap) {
@@ -451,11 +457,11 @@ class Q6_5 {
     }
     printOrderList(customorOrderMap.get(customorId), memberMap);
   }
-  
+
   public Member getMember(List<Member> memberList, String customorId) {
     Member thismember = null;
-    for(Member member : memberList) {
-      if(customorId.equals(member.getId())) {
+    for (Member member : memberList) {
+      if (customorId.equals(member.getId())) {
         thismember = member;
       }
     }
@@ -475,9 +481,10 @@ class Q6_5 {
     }
   }
 
-  public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map, boolean isAsc) {
+  public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map,
+      boolean isAsc) {
     List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
-    if(isAsc) {
+    if (isAsc) {
       Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
         @Override
         public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
@@ -499,8 +506,27 @@ class Q6_5 {
     }
     return result;
   }
+  
+  public Map<Integer, String> sortTreeMap(Map<String, List<OrderData>> customorOrderMap,
+      boolean isAsc) {
+    Map<Integer, String> sortedTree = null;
+    if(isAsc) {
+      sortedTree = new TreeMap<Integer, String>(); 
+    } else {
+      sortedTree = new TreeMap<Integer, String>(Collections.reverseOrder());
+    }
+    for (String key : customorOrderMap.keySet()) {
+      int totalPrice = 0;
+      for (OrderData order : customorOrderMap.get(key)) {
+        totalPrice += order.getPrice();
+      }
+      sortedTree.put(totalPrice, key);
+    }
+    return sortedTree;
+  }
 
-  public Map<String, Integer> sortPriceAsc(Map<String, List<OrderData>> customorOrderMap, boolean isAsc) {
+  public Map<String, Integer> sortPriceAsc(Map<String, List<OrderData>> customorOrderMap,
+      boolean isAsc) {
     Map<String, Integer> totalBought = new HashMap<String, Integer>();
     for (String key : customorOrderMap.keySet()) {
       int totalPrice = 0;
@@ -511,11 +537,20 @@ class Q6_5 {
     }
     return sortByValue(totalBought, isAsc);
   }
-  
+
   public void printCustomorBought(Map<String, Integer> customorBought, List<Member> memberMap) {
     System.out.println("編號\t姓名\t消費總金額");
-    for(String key: customorBought.keySet()) {
-      System.out.println(key + "\t" + getMember(memberMap, key).getName() + "\t" + customorBought.get(key));
+    for (String key : customorBought.keySet()) {
+      System.out.println(
+          key + "\t" + getMember(memberMap, key).getName() + "\t" + customorBought.get(key));
+    }
+  }
+
+  public void printTreeMap(Map<Integer, String> treeMap, List<Member> memberMap) {
+    System.out.println("編號\t姓名\t消費總金額");
+    for (Integer price : treeMap.keySet()) {
+      System.out.println(
+          treeMap.get(price) + "\t" + getMember(memberMap, treeMap.get(price)).getName() + "\t" + price);
     }
   }
 
@@ -541,9 +576,9 @@ class Q6_5 {
   public void printOrderList(List<OrderData> orderList, List<Member> memberMap) {
     System.out.println("編號\t姓名\t訂單\t訂購內容\t金額");
     for (OrderData data : orderList) {
-      System.out.println(data.getCustomorId() + "\t"
-          + getMember(memberMap, data.getCustomorId()).getName() + "\t" + data.getOrderId() + "\t"
-          + data.getCatagory() + "\t" + data.getPrice());
+      System.out.println(
+          data.getCustomorId() + "\t" + getMember(memberMap, data.getCustomorId()).getName() + "\t"
+              + data.getOrderId() + "\t" + data.getCatagory() + "\t" + data.getPrice());
     }
   }
 
