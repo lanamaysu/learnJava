@@ -92,7 +92,8 @@ class Q8_2 {
   Map<String, List<Double>> leaderboards = new HashMap<String, List<Double>>();
 
   public void ans() {
-    doMultipleRace(100);
+    initPlayers();
+    doMultipleRace(10000);
   }
 
   public void doMultipleRace(int count) {
@@ -101,10 +102,12 @@ class Q8_2 {
     }
     Entry<String, List<Double>> finalWinner = null;
     for (Entry<String, List<Double>> entry : leaderboards.entrySet()) {
-      if (finalWinner == null || finalWinner.getValue().size() > entry.getValue().size()) {
+      if (finalWinner == null) {
+        finalWinner = entry;
+      } else if (entry.getValue().size() > finalWinner.getValue().size()) {
         finalWinner = entry;
       }
-      System.out.println(entry.getKey() + ":" + entry.getValue().toString());
+      System.out.println(entry.getKey() + ": 共贏" + entry.getValue().size() + "次");
     }
     System.out.println("Final Winner: " + finalWinner.getKey());
     System.out.println("Final Winner Personal Best: " + Collections.min(finalWinner.getValue()));
@@ -112,7 +115,6 @@ class Q8_2 {
 
   public void doRace() {
     Map<String, Double> onceLeaderBoard = new HashMap<String, Double>();
-    initPlayers();
     for (player player : participants) {
       onceLeaderBoard.put(player.getName(), countRaceTime(player));
     }
