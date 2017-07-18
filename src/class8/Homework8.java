@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Homework8 {
@@ -87,9 +88,8 @@ class Q8_1 {
  * </pre>
  */
 class Q8_2 {
-  int raceDistance = 100;
-  List<player> participants = new ArrayList<player>();
-  Map<String, List<Double>> leaderboards = new HashMap<String, List<Double>>();
+  List<Player> participants = new ArrayList<Player>();
+  Map<String, List<Double>> leaderboards = new ConcurrentHashMap<String, List<Double>>();
 
   public void ans() {
     initPlayers();
@@ -98,7 +98,7 @@ class Q8_2 {
 
   public void doMultipleRace(int count) {
     for (int i = 0; i < count; i++) {
-      doRace();
+      new OneRaceThread(participants, leaderboards).run();
     }
     Entry<String, List<Double>> finalWinner = null;
     for (Entry<String, List<Double>> entry : leaderboards.entrySet()) {
@@ -113,10 +113,32 @@ class Q8_2 {
     System.out.println("Final Winner Personal Best: " + Collections.min(finalWinner.getValue()));
   }
 
-  public void doRace() {
+
+  public void initPlayers() {
+    Player turtle = new Player("烏龜", 1, new double[] {0.35, 0.55});
+    Player pig = new Player("小豬", 2, new double[] {0.35, 3.5});
+    Player rabbit = new Player("兔子", 3, new double[] {2.6, 4.0});
+    participants.add(turtle);
+    participants.add(pig);
+    participants.add(rabbit);
+  }
+}
+
+
+class OneRaceThread extends Thread {
+  private List<Player> participants;
+  private Map<String, List<Double>> leaderboards;
+
+  public OneRaceThread(List<Player> participants, Map<String, List<Double>> leaderboards) {
+    this.participants = participants;
+    this.leaderboards = leaderboards;
+  }
+
+  @Override
+  public void run() {
     Map<String, Double> onceLeaderBoard = new HashMap<String, Double>();
-    for (player player : participants) {
-      onceLeaderBoard.put(player.getName(), countRaceTime(player));
+    for (Player player : participants) {
+      new OneAnimalRun(player, onceLeaderBoard).run();
     }
     Entry<String, Double> winner = null;
     for (Entry<String, Double> entry : onceLeaderBoard.entrySet()) {
@@ -125,20 +147,45 @@ class Q8_2 {
       }
     }
     System.out.println(winner.getKey());
-    putLeaderboards(winner);
+    putLeaderboards(winner, this.leaderboards);
   }
 
-  public void putLeaderboards(Entry<String, Double> winner) {
+  public void putLeaderboards(Entry<String, Double> winner,
+      Map<String, List<Double>> leaderboards) {
+    List<Double> records = leaderboards.get(winner.getKey()) != null
+        ? leaderboards.get(winner.getKey()) : new ArrayList<Double>();
+    records.add(winner.getValue());
+    leaderboards.put(winner.getKey(), records);
+  }
+}
+
+
+class OneAnimalRun extends Thread {
+  private Player thisPlayer;
+  private Map<String, Double> onceLeaderBoard;
+
+  public OneAnimalRun(Player thisPlayer, Map<String, Double> onceLeaderBoard) {
+    this.thisPlayer = thisPlayer;
+    this.onceLeaderBoard = onceLeaderBoard;
+  }
+
+  @Override
+  public void run() {
+    this.onceLeaderBoard.put(this.thisPlayer.getName(), countRaceTime(this.thisPlayer));
+  }
+
+  public void putLeaderboards(Entry<String, Double> winner,
+      Map<String, List<Double>> leaderboards) {
     List<Double> records = leaderboards.get(winner.getKey()) != null
         ? leaderboards.get(winner.getKey()) : new ArrayList<Double>();
     records.add(winner.getValue());
     leaderboards.put(winner.getKey(), records);
   }
 
-  public double countRaceTime(player thisPlayer) {
+  public double countRaceTime(Player thisPlayer) {
     double[] pauseRange = thisPlayer.getPauseRange();
     int stepDistance = thisPlayer.getStepDistance();
-    int distance = raceDistance;
+    int distance = 100;
     double timer = 0;
     while (distance > 0 && (distance - stepDistance > 0)) {
       timer += 1 + getPauseTime(pauseRange);
@@ -155,18 +202,11 @@ class Q8_2 {
     return (1 + ThreadLocalRandom.current().nextDouble(pauseRange[0], pauseRange[1]));
   }
 
-  public void initPlayers() {
-    player turtle = new player("烏龜", 1, new double[] {0.35, 0.55});
-    player pig = new player("小豬", 2, new double[] {0.35, 3.5});
-    player rabbit = new player("兔子", 3, new double[] {2.6, 4.0});
-    participants.add(turtle);
-    participants.add(pig);
-    participants.add(rabbit);
-  }
+
 }
 
 
-class player {
+class Player {
   private String name;
   private int stepDistance;
   private double[] pauseRange;
@@ -195,7 +235,7 @@ class player {
     this.pauseRange = pauseRange;
   }
 
-  public player(String name, int stepDistance, double[] pauseRange) {
+  public Player(String name, int stepDistance, double[] pauseRange) {
     super();
     this.name = name;
     this.stepDistance = stepDistance;
